@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/notice"
+    android:lineSpacingExtra="5dp"
+    android:padding="10dp"
+    android:text="일시 : 4월 18일 수요일 5,6교시 (1시 ~ 2시 50분)\n 장소 : 공B039\n 범위 : 추후 공지\n * 1시 50분 까지 입실 가능" />
