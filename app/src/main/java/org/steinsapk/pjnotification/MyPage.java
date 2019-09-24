@@ -128,7 +128,7 @@ public class MyPage extends AppCompatActivity {
             // 강의 클릭 콜백 메소드 설정하기
             linearLayout.setOnClickListener((View v) -> {
                 // 인텐트 객체 생성
-                Intent intent = new Intent(getApplicationContext(), NoticePage.class);
+                Intent intent = new Intent(getApplicationContext(), CoursePage.class);
 
                 // 추가 데이터 삽입 - 어떤 수업을 클릭했는지
                 intent.putExtra("courseName", courseName);

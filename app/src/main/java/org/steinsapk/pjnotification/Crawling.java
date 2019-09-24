@@ -124,6 +124,58 @@ public class Crawling {
         cursor.close();
     }
 
+    public void saveCourseItem() throws Exception {
+        Cursor cursor = db.getCourseNameAndLink();
+        while (cursor.moveToNext()) {
+            String courseName = cursor.getString(0);
+            String courseLink = cursor.getString(1);
+
+            // 디버깅용 출력
+            debugLog(courseName + " ITEM UPDATE 시작");
+
+            // 강의 페이지 접속
+            HtmlPage coursePage = webClient.getPage(courseLink);
+
+            // Anchor 요소를 찾는다.
+            DomNodeList<DomNode> list = coursePage.querySelectorAll("ul.section.img-text a");
+
+            for (int i = 1; i < list.size(); i++) {
+                // anchor 가져오기
+                HtmlAnchor anchor = (HtmlAnchor) list.get(i);
+
+                // itemName, itemLink, itemAttribute 가져오기
+                String itemLink = anchor.getHrefAttribute();
+                String itemAttribute = null;
+                try {
+                    itemAttribute = anchor.querySelector(".accesshide").asText();
+                } catch (NullPointerException e) {
+                    // accesshide가 없는 참고문헌은 무시하기.
+                    continue;
+                }
+                String itemName = anchor.querySelector(".instancename").asText();
+                itemName = itemName.substring(0, itemName.indexOf(itemAttribute));
+                String itemContents = "";
+
+                debugLog(itemName);
+                //debugLog(itemLink);
+                //debugLog(itemAttribute);
+
+                // itemAttribute가 파일이라면 접속하지 말기.
+                if (!itemAttribute.equals("파일")) {
+                    HtmlPage page = webClient.getPage(itemLink);
+                    itemContents = page.asXml();
+                }
+
+                // DB에 넣기
+                if (db.insertItem(courseName, itemName, itemContents, itemLink, itemAttribute))
+                    // 알림 생성하기
+                    Notification.makeNotification(courseName, itemName, context, false, itemName);
+            }
+        }
+
+        cursor.close();
+    }
+
     private long parseDate(String noticeDate) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일, EEE, a KK:mm", Locale.KOREA);
         String target;
@@ -194,7 +246,7 @@ public class Crawling {
                 break;
 
             // 알림 생성하기
-            Notification.makeNotification(courseName, noticeTitle, context);
+            Notification.makeNotification(courseName, noticeTitle, context, true, "");
 
             // 탈출 조건
             HtmlElement htmlElement = noticePage.querySelector("div.table-footer-area + table");

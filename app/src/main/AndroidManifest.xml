@@ -10,7 +10,15 @@
         android:roundIcon="@drawable/pj_logo_white"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity"></activity>
+        <activity
+            android:name=".ItemPage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CoursePage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">

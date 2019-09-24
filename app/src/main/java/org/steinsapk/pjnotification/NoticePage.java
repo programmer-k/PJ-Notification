@@ -13,14 +13,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
 public class NoticePage extends AppCompatActivity {
     String courseName;
     SQLiteDatabase db;
     LinearLayout linearLayout;
-    AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +56,6 @@ public class NoticePage extends AppCompatActivity {
             // 레이아웃 그리기
             drawLayout(noticeTitle, noticeContents);
         }*/
-
-        // 광고 초기화
-        MobileAds.initialize(this, "ca-app-pub-8135189840500081~6669562666");
-
-        // 광고 호출
-        // AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        // adView.loadAd(adRequest);
     }
 
     @Override
@@ -110,6 +99,8 @@ public class NoticePage extends AppCompatActivity {
         // 광고 호출
         // AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         // adView.loadAd(adRequest);
+
+        cursor.close();
     }
 
     private void drawLayout(String noticeTitle, String noticeContents, String attchmentFiles) {

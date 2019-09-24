@@ -12,6 +12,7 @@ public class Database {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS NOTICE(COURSENAME TEXT, NOTICETITLE TEXT, NOTICECONTENTS TEXT, TIME INTEGER, NOTICELINK TEXT, ATTACHMENTFILES TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS COURSE(COURSENAME TEXT, COURSELINK TEXT);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS ITEM(COURSENAME TEXT, ITEMNAME TEXT, ITEMCONTENTS TEXT, ITEMLINK TEXT, ITEMATTRIBUTE TEXT);");
     }
 
     public boolean insertCourse(String courseName, String courseLink) {
@@ -39,6 +40,32 @@ public class Database {
 
     public Cursor getCourseNameAndLink() {
         return db.rawQuery("SELECT * FROM COURSE;", null);
+    }
+
+    public boolean insertItem(String courseName, String itemName, String itemContents, String itemLink, String itemAttribute) {
+        boolean success = false;
+
+        // 쿼리를 할 때, '가 있으면, 에러가 생겨서 에러가 난다. escape sequence로 '를 하나 더 넣어줘야 한다.
+        courseName = courseName.replaceAll("'", "''");
+        itemName = itemName.replaceAll("'", "''");
+        itemContents = itemContents.replaceAll("'", "''");
+        itemLink = itemLink.replaceAll("'", "''");
+        itemAttribute = itemAttribute.replaceAll("'", "''");
+
+        /* 데이터가 있는지 확인 후 없으면 넣는다. */
+
+        // Query
+        Cursor cursor = db.rawQuery("SELECT * FROM ITEM WHERE ITEMNAME='" + itemName + "' AND COURSENAME='" + courseName +"';", null);
+
+        // Query 한 데이터가 없다면, INSERT
+        if (!cursor.moveToNext()) {
+            db.execSQL("INSERT INTO ITEM VALUES('" + courseName + "', '" + itemName + "', '" + itemContents + "', '" + itemLink + "', '" + itemAttribute + "');");
+            // debugLog(itemName);
+            success = true;
+        }
+
+        cursor.close();
+        return success;
     }
 
     public boolean insertNotice(String courseName, String noticeTitle, String noticeContents, long time, String noticeLink, String attachmentFiles) {

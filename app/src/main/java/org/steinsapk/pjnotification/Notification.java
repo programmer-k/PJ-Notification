@@ -25,26 +25,42 @@ public class Notification {
     }
     */
 
-    static void makeNotification(String courseName, String noticeTitle, Context context) {
+    static void makeNotification(String courseName, String noticeTitle, Context context, boolean isNotice, String itemName) {
         // Create an explicit intent for an Activity in your app
         Intent intent = new Intent(context, SplashActivity.class);
         // 추가 데이터 삽입 - 어떤 수업을 클릭했는가
         intent.putExtra("courseName", courseName);
+        intent.putExtra("isNotice", isNotice);
+        intent.putExtra("itemName", itemName);
         Log.e("TAG", courseName);
 
 
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, noticeTitle.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Notice")
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pj_logo_blue))
-                .setSmallIcon(R.drawable.baseline_announcement_black_24dp)
-                .setContentTitle(courseName)
-                .setContentText(noticeTitle)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+        NotificationCompat.Builder builder = null;
+
+        if (isNotice) {
+            builder = new NotificationCompat.Builder(context, "Notice")
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pj_logo_blue))
+                    .setSmallIcon(R.drawable.baseline_announcement_black_24dp)
+                    .setContentTitle(courseName)
+                    .setContentText(noticeTitle)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    // Set the intent that will fire when the user taps the notification
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+        } else {
+            builder = new NotificationCompat.Builder(context, "Notice")
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pj_logo_white))
+                    .setSmallIcon(R.drawable.baseline_announcement_black_24dp)
+                    .setContentTitle(courseName)
+                    .setContentText(noticeTitle)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    // Set the intent that will fire when the user taps the notification
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+        }
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 

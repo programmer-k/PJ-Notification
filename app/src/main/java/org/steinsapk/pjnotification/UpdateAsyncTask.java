@@ -52,6 +52,9 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
             // 새로운 강의가 있으면 추가한다. (없어진 강의를 없애지는 못함)
             crawling.saveCourseList();
 
+            // 강의 아이템 업데이트
+            crawling.saveCourseItem();
+
             // 강의 공지 업데이트
             crawling.saveCourseNotice();
         } catch (Exception e) {
