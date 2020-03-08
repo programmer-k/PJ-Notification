@@ -106,7 +106,7 @@ public class MyPage extends AppCompatActivity {
 
     private void loadCourseList() {
         // Database 객체 생성
-        Database database = new Database(openOrCreateDatabase("database.db", MODE_ENABLE_WRITE_AHEAD_LOGGING,null));
+        Database database = new Database(Database.openDatabase(getApplicationContext()));
 
         // 강의 목록 불러오기
         Cursor cursor = database.getCourseList();

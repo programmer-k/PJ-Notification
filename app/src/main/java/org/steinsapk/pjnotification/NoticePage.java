@@ -75,7 +75,7 @@ public class NoticePage extends AppCompatActivity {
         Log.e("TAG", courseName + " 읽어들임");
 
         // DB 열기
-        db = openOrCreateDatabase("database.db", MODE_ENABLE_WRITE_AHEAD_LOGGING,null);
+        db = Database.openDatabase(getApplicationContext());
 
         // 쿼리하기
         Cursor cursor = db.rawQuery("SELECT NOTICETITLE, NOTICECONTENTS, ATTACHMENTFILES FROM NOTICE WHERE COURSENAME='"+ courseName + "' ORDER BY TIME DESC" + ";", null);

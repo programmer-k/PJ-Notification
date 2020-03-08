@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         if (prefs.getInt("databaseVersion", 1) == 1) {
             // <---- run your one time code here
             // NOTICELINK, ATTACHMENTFILES column 추가
-            SQLiteDatabase db = openOrCreateDatabase("database.db", MODE_ENABLE_WRITE_AHEAD_LOGGING,null);
+            SQLiteDatabase db = Database.openDatabase(getApplicationContext());
 
             try {
                 db.execSQL("ALTER TABLE NOTICE ADD NOTICELINK TEXT;");
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         private UserInfo userInfo;
 
         public LoginAsyncTask(Activity activity) {
-            crawling = new Crawling(null, activity.openOrCreateDatabase("database.db", MODE_ENABLE_WRITE_AHEAD_LOGGING,null));
+            crawling = new Crawling(null, Database.openDatabase(activity.getApplicationContext()));
             this.activity = activity;
             userInfo = new UserInfo(activity);
 

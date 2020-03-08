@@ -1,8 +1,11 @@
 package org.steinsapk.pjnotification;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import java.util.Calendar;
 
 public class Database {
     private SQLiteDatabase db;
@@ -137,5 +140,12 @@ public class Database {
 
     private static void debugLog(String log) {
         Log.e("TAG", log);
+    }
+
+    public static SQLiteDatabase openDatabase(Context context) {
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+
+        return context.openOrCreateDatabase("database"  + year + (month >= 2 && month < 8 ? "1st" : "2nd")+".db", 0,null);
     }
 }

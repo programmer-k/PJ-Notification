@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import static android.content.Context.MODE_ENABLE_WRITE_AHEAD_LOGGING;
-
 public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
     private Crawling crawling;
     private ProgressDialog progressDialog;
@@ -25,7 +23,7 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
             progressDialog.show();
         }
 
-        crawling = new Crawling(context, context.openOrCreateDatabase("database.db", MODE_ENABLE_WRITE_AHEAD_LOGGING,null));
+        crawling = new Crawling(context, Database.openDatabase(context.getApplicationContext()));
         this.context = context;
 
         UserInfo userInfo = new UserInfo(context);

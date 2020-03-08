@@ -117,7 +117,7 @@ public class MyService extends JobService {
             this.jobParameters = jobParameters;
 
             // DB 열기
-            db = openOrCreateDatabase("database.db", MODE_ENABLE_WRITE_AHEAD_LOGGING,null);
+            db = Database.openDatabase(getApplicationContext());
 
             // 테이블 만들기
             db.execSQL("CREATE TABLE IF NOT EXISTS NOTICE(COURSENAME TEXT, NOTICETITLE TEXT, NOTICECONTENTS TEXT);");

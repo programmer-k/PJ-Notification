@@ -19,13 +19,15 @@ public class ItemPage extends AppCompatActivity {
         String itemName = intent.getStringExtra("itemName");
 
         // DB 열기
-        SQLiteDatabase db = openOrCreateDatabase("database.db", MODE_ENABLE_WRITE_AHEAD_LOGGING,null);
+        SQLiteDatabase db = Database.openDatabase(getApplicationContext());
 
         // 쿼리하기
         Cursor cursor = db.rawQuery("SELECT ITEMCONTENTS FROM ITEM WHERE COURSENAME='"+ courseName + "' AND ITEMNAME='" + itemName + "';", null);
 
         cursor.moveToNext();
         String data = cursor.getString(0);
+
+        cursor.close();
 
         WebView webView = findViewById(R.id.webView);
 
