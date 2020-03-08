@@ -37,6 +37,10 @@ public class Database {
         return success;
     }
 
+    public void clearCourse() {
+        Cursor cursor = db.rawQuery("DELETE FROM COURSE", null);
+    }
+
     public Cursor getCourseList() {
         return db.rawQuery("SELECT DISTINCT COURSENAME FROM COURSE;", null);
     }

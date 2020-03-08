@@ -86,6 +86,8 @@ public class Crawling {
             debugLog(e.toString());
         }
          */
+        // 수강 변경, 철회 등을 대비해 기존 데이터 지우기
+        db.clearCourse();
 
         // 모든 강의에 대해서 링크 페이지와 강의 이름 찾기
         DomNodeList<DomNode> courseList = page.querySelectorAll("h3.coursename");
