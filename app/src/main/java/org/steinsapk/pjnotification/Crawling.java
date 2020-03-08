@@ -18,6 +18,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -81,11 +82,11 @@ public class Crawling {
         // 디버깅용 코드 - 학기 바꾸기.
         /*
         try {
-            page = webClient.getPage("https://yscec.yonsei.ac.kr/my/?year=2017&term=1");
+            page = webClient.getPage("https://yscec.yonsei.ac.kr/my/?year=2018&term=2");
         } catch (IOException e) {
             debugLog(e.toString());
         }
-         */
+        */
         // 수강 변경, 철회 등을 대비해 기존 데이터 지우기
         db.clearCourse();
 
@@ -115,12 +116,29 @@ public class Crawling {
             // 강의 페이지 접속
             HtmlPage coursePage = webClient.getPage(courseLink);
 
-            // 강의 공지 목록 링크 찾아서 들어가기
-            HtmlSpan spanElement = coursePage.querySelector(".instancename");
-            HtmlPage noticeListPage = spanElement.click();
+            // 게시판 링크 찾아서 들어가기
+            DomNodeList<DomNode> spanElements = coursePage.querySelectorAll(".instancename");
 
-            // 각 공지사항에 대해서 루프 돌면서 DB에 저장하기
-            loopNotice(noticeListPage, courseName);
+            for (int i = 0; i < spanElements.size(); i++) {
+                HtmlSpan spanElement = (HtmlSpan) spanElements.get(i);
+
+                String boardName = spanElement.asText();
+                String itemAttribute = null;
+                try {
+                    itemAttribute = spanElement.querySelector(".accesshide").asText();
+                } catch (NullPointerException e) {
+                    // accesshide가 없는 참고문헌은 무시하기.
+                    continue;
+                }
+
+                // 게시판만 루프 돌기
+                if (itemAttribute.equals("게시판(일반)") || itemAttribute.equals("Forum(General)")) {
+                    HtmlPage noticeListPage = spanElement.click();
+
+                    // 각 공지사항에 대해서 루프 돌면서 DB에 저장하기
+                    loopNotice(noticeListPage, courseName, boardName);
+                }
+            }
         }
 
         cursor.close();
@@ -162,8 +180,12 @@ public class Crawling {
                 //debugLog(itemLink);
                 //debugLog(itemAttribute);
 
+                // 게시판은 패스
+                if (itemAttribute.equals("게시판(일반)") || itemAttribute.equals("Forum(General)"))
+                    continue;
+
                 // itemAttribute가 파일이라면 접속하지 말기.
-                if (!itemAttribute.equals("파일")) {
+                if (!(itemAttribute.equals("파일") || itemAttribute.equals("File"))) {
                     HtmlPage page = webClient.getPage(itemLink);
                     itemContents = page.asXml();
                 }
@@ -171,7 +193,7 @@ public class Crawling {
                 // DB에 넣기
                 if (db.insertItem(courseName, itemName, itemContents, itemLink, itemAttribute))
                     // 알림 생성하기
-                    Notification.makeNotification(courseName, itemName, context, false, itemName);
+                    Notification.makeNotification(courseName, itemName, context, false, itemName, "");
             }
         }
 
@@ -195,7 +217,7 @@ public class Crawling {
         return date.getTime();
     }
 
-    private void loopNotice(HtmlPage noticeListPage, String courseName) throws Exception {
+    private void loopNotice(HtmlPage noticeListPage, String courseName, String boardName) throws Exception {
         boolean first = true;
         HtmlPage noticePage = null;
         HtmlAnchor anchor;
@@ -212,6 +234,9 @@ public class Crawling {
                 } catch (NullPointerException e) {
                     debugLog("공지가 하나도 없습니다!");
                     break;
+                } catch (ClassCastException e) {
+                    debugLog("비공개 글입니다.");
+                    break;
                 }
 
                 // 공지 페이지 들어가기
@@ -224,9 +249,18 @@ public class Crawling {
                 // 그 다음 페이지 들어가기 - 마지막 tr을 선택
                 DomNode tr = noticePage.querySelector("div.table-footer-area + table > thead > tr:last-child");
 
+                // 댓글 있는 게시글
+                if (tr == null)
+                    tr = noticePage.querySelector("div.table-reply-area + table > thead > tr:last-child");
+
                 // <a> 선택 후 페이지 이동
                 anchor = tr.querySelector("a");
-                noticePage = webClient.getPage(anchor.getAttribute("href"));
+                try {
+                    noticePage = webClient.getPage(anchor.getAttribute("href"));
+                } catch (MalformedURLException malformedURLException) {
+                    // 비공개 글
+                    break;
+                }
             }
 
             // 공지 제목, 글, 날짜, 링크 주소, 첨부 파일 얻기
@@ -244,14 +278,19 @@ public class Crawling {
             }
 
 
-            if (!insertNotice(courseName, noticeTitle, noticeContents, noticeDate, noticeLink, attachmentFiles))
+            if (!insertNotice(courseName, noticeTitle, noticeContents, noticeDate, noticeLink, attachmentFiles, boardName))
                 break;
 
             // 알림 생성하기
-            Notification.makeNotification(courseName, noticeTitle, context, true, "");
+            Notification.makeNotification(courseName, noticeTitle, context, true, "", boardName);
 
             // 탈출 조건
             HtmlElement htmlElement = noticePage.querySelector("div.table-footer-area + table");
+
+            // 댓글 있는 게시글
+            if (htmlElement == null) {
+                htmlElement = noticePage.querySelector("div.table-reply-area + table");
+            }
 
             // 첫 글하고 마지막 글은 <tr> 태그가 3개이다.
             // 첫 글이자 마지막 글(글이 하나 일 때)은 <tr> 태그가 2개이다.
@@ -262,9 +301,9 @@ public class Crawling {
         }
     }
 
-    private boolean insertNotice(String courseName, String noticeTitle, String noticeContents, String noticeDate, String noticeLink, String attachmentFiles) throws ParseException {
+    private boolean insertNotice(String courseName, String noticeTitle, String noticeContents, String noticeDate, String noticeLink, String attachmentFiles, String boardName) throws ParseException {
         // DB에 넣기
-        return db.insertNotice(courseName, noticeTitle, noticeContents, parseDate(noticeDate), noticeLink, attachmentFiles);
+        return db.insertNotice(courseName, noticeTitle, noticeContents, parseDate(noticeDate), noticeLink, attachmentFiles, boardName);
     }
 
     public void closeDB() {

@@ -25,13 +25,14 @@ public class Notification {
     }
     */
 
-    static void makeNotification(String courseName, String noticeTitle, Context context, boolean isNotice, String itemName) {
+    static void makeNotification(String courseName, String noticeTitle, Context context, boolean isNotice, String itemName, String boardName) {
         // Create an explicit intent for an Activity in your app
         Intent intent = new Intent(context, SplashActivity.class);
         // 추가 데이터 삽입 - 어떤 수업을 클릭했는가
         intent.putExtra("courseName", courseName);
         intent.putExtra("isNotice", isNotice);
         intent.putExtra("itemName", itemName);
+        intent.putExtra("boardName", boardName);
         Log.e("TAG", courseName);
 
 

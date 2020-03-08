@@ -47,7 +47,7 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
             // 로그인
             crawling.login(id, password);
 
-            // 새로운 강의가 있으면 추가한다. (없어진 강의를 없애지는 못함)
+            // 강의 리스트 업데이트
             crawling.saveCourseList();
 
             // 강의 아이템 업데이트
@@ -58,6 +58,28 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
         } catch (Exception e) {
             debugLog(e.toString());
             error = e.getMessage();
+            debugLog(error);
+
+            /*
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String sStackTrace = sw.toString(); // stack trace as a string
+            debugLog(sStackTrace);
+
+            FileOutputStream outputStream;
+
+            try {
+                outputStream = context.openFileOutput("log_file.txt", Context.MODE_APPEND);
+                Date date = new Date();
+                outputStream.write(date.toString().getBytes());
+                outputStream.write(sStackTrace.getBytes());
+                outputStream.flush();
+                outputStream.close();
+            } catch (Exception ex) {
+                debugLog("log file write fail: " + ex.getMessage());
+            }
+            */
         }
 
         return null;

@@ -13,7 +13,7 @@ public class Database {
     public Database(SQLiteDatabase db) {
         this.db = db;
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS NOTICE(COURSENAME TEXT, NOTICETITLE TEXT, NOTICECONTENTS TEXT, TIME INTEGER, NOTICELINK TEXT, ATTACHMENTFILES TEXT);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS NOTICE(COURSENAME TEXT, NOTICETITLE TEXT, NOTICECONTENTS TEXT, TIME INTEGER, NOTICELINK TEXT, ATTACHMENTFILES TEXT, BOARDNAME TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS COURSE(COURSENAME TEXT, COURSELINK TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS ITEM(COURSENAME TEXT, ITEMNAME TEXT, ITEMCONTENTS TEXT, ITEMLINK TEXT, ITEMATTRIBUTE TEXT);");
     }
@@ -38,7 +38,7 @@ public class Database {
     }
 
     public void clearCourse() {
-        Cursor cursor = db.rawQuery("DELETE FROM COURSE", null);
+        db.execSQL("DELETE FROM COURSE");
     }
 
     public Cursor getCourseList() {
@@ -75,7 +75,7 @@ public class Database {
         return success;
     }
 
-    public boolean insertNotice(String courseName, String noticeTitle, String noticeContents, long time, String noticeLink, String attachmentFiles) {
+    public boolean insertNotice(String courseName, String noticeTitle, String noticeContents, long time, String noticeLink, String attachmentFiles, String boardName) {
         boolean success = false;
 
         // 쿼리를 할 때, '가 있으면, 에러가 생겨서 에러가 난다. escape sequence로 '를 하나 더 넣어줘야 한다.
@@ -84,15 +84,16 @@ public class Database {
         noticeContents = noticeContents.replaceAll("'", "''");
         attachmentFiles = attachmentFiles.replaceAll("'", "''");
         noticeLink = noticeLink.replaceAll("'", "''");
+        boardName = boardName.replaceAll("'", "''");
 
         /* 데이터가 있는지 확인 후 없으면 넣는다. */
 
         // Query
-        Cursor cursor = db.rawQuery("SELECT * FROM NOTICE WHERE NOTICETITLE='" + noticeTitle + "' AND NOTICECONTENTS='" + noticeContents + "' AND COURSENAME='" + courseName +"';", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM NOTICE WHERE NOTICETITLE='" + noticeTitle + "' AND NOTICECONTENTS='" + noticeContents + "' AND COURSENAME='" + courseName + "' AND BOARDNAME='" + boardName + "';", null);
 
         // Query 한 데이터가 없다면, INSERT
         if (!cursor.moveToNext()) {
-            db.execSQL("INSERT INTO NOTICE VALUES('" + courseName + "', '" + noticeTitle + "', '" + noticeContents + "', '" + time + "', '" + noticeLink + "', '" + attachmentFiles +"');");
+            db.execSQL("INSERT INTO NOTICE VALUES('" + courseName + "', '" + noticeTitle + "', '" + noticeContents + "', '" + time + "', '" + noticeLink + "', '" + attachmentFiles + "', '" + boardName +"');");
             debugLog(noticeTitle);
             success = true;
 

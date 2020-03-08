@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 public class NoticePage extends AppCompatActivity {
     String courseName;
+    String boardName;
     SQLiteDatabase db;
     LinearLayout linearLayout;
 
@@ -70,6 +71,8 @@ public class NoticePage extends AppCompatActivity {
 
         // My Page에서 전달한 데이터를 가져온다.
         courseName = intent.getStringExtra("courseName");
+        boardName = intent.getStringExtra("boardName");
+
 
         // 디버깅
         Log.e("TAG", courseName + " 읽어들임");
@@ -78,11 +81,14 @@ public class NoticePage extends AppCompatActivity {
         db = Database.openDatabase(getApplicationContext());
 
         // 쿼리하기
-        Cursor cursor = db.rawQuery("SELECT NOTICETITLE, NOTICECONTENTS, ATTACHMENTFILES FROM NOTICE WHERE COURSENAME='"+ courseName + "' ORDER BY TIME DESC" + ";", null);
+        Cursor cursor = db.rawQuery("SELECT NOTICETITLE, NOTICECONTENTS, ATTACHMENTFILES FROM NOTICE WHERE COURSENAME='" + courseName + "' AND BOARDNAME='" + boardName + "' ORDER BY TIME DESC" + ";", null);
 
-        // 강의명 텍스트 설정하기
-        TextView textView = findViewById(R.id.courseName);
-        textView.setText(courseName);
+        // 제목 텍스트 설정하기
+        TextView textView1 = findViewById(R.id.courseName);
+        textView1.setText(courseName);
+
+        TextView textView2 = findViewById(R.id.boardName);
+        textView2.setText(boardName);
 
         while (cursor.moveToNext()) {
             String noticeTitle = cursor.getString(0);
@@ -92,13 +98,6 @@ public class NoticePage extends AppCompatActivity {
             // 레이아웃 그리기
             drawLayout(noticeTitle, noticeContents, attachmentFiles);
         }
-
-        // 광고 초기화
-        // MobileAds.initialize(this, "ca-app-pub-8135189840500081~6669562666");
-
-        // 광고 호출
-        // AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        // adView.loadAd(adRequest);
 
         cursor.close();
     }

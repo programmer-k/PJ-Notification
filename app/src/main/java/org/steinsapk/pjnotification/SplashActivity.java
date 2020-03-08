@@ -16,6 +16,7 @@ public class SplashActivity extends AppCompatActivity {
         String courseName = getIntent().getStringExtra("courseName");
         boolean isNotice = getIntent().getBooleanExtra("isNotice", false);
         String itemName = getIntent().getStringExtra("itemName");
+        String boardName = getIntent().getStringExtra("boardName");
 
         // courseName 값이 없으면 일반적인 앱 실행이므로 MainActivity를 띄운다.
         if (courseName == null) {
@@ -29,6 +30,7 @@ public class SplashActivity extends AppCompatActivity {
             // 추가 데이터 삽입 - 어떤 수업을 클릭했는가
             intent.putExtra("courseName", courseName);
             intent.putExtra("itemName", itemName);
+            intent.putExtra("boardName", boardName);
         }
 
         startActivity(intent);

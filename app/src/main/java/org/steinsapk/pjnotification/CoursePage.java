@@ -48,12 +48,24 @@ public class CoursePage extends AppCompatActivity {
         // DB 열기
         db = Database.openDatabase(getApplicationContext());
 
-        // 쿼리하기
-        Cursor cursor = db.rawQuery("SELECT ITEMNAME, ITEMCONTENTS, ITEMLINK FROM ITEM WHERE COURSENAME='"+ courseName + "';", null);
-
         // 강의명 텍스트 설정하기
         TextView textView = findViewById(R.id.courseName);
         textView.setText(courseName);
+
+        // 게시판 쿼리하기
+        Cursor cursor = db.rawQuery("SELECT DISTINCT BOARDNAME FROM NOTICE WHERE COURSENAME='"+ courseName + "';", null);
+
+        while (cursor.moveToNext()) {
+            String boardName = cursor.getString(0);
+
+            // 레이아웃 그리기
+            drawLayout(boardName, null, null);
+        }
+
+        cursor.close();
+
+        // 쿼리하기
+        cursor = db.rawQuery("SELECT ITEMNAME, ITEMCONTENTS, ITEMLINK FROM ITEM WHERE COURSENAME='"+ courseName + "';", null);
 
         while (cursor.moveToNext()) {
             String itemName = cursor.getString(0);
@@ -67,10 +79,8 @@ public class CoursePage extends AppCompatActivity {
         cursor.close();
     }
 
-    public void onClickNoticeButton(View v) {
-        Intent intent = new Intent(this, NoticePage.class);
-        intent.putExtra("courseName", courseName);
-        startActivity(intent);
+    private void drawLayout(String boardName) {
+
     }
 
     private void drawLayout(String itemName, String itemContents, String itemLink) {
@@ -87,6 +97,21 @@ public class CoursePage extends AppCompatActivity {
         // 텍스트 값 설정
         Button button = (Button) viewGroup.getChildAt(0);
         button.setText(itemName);
+
+        // 게시판
+        if (itemContents == null && itemLink == null) {
+            // 버튼에 클릭 이벤트 핸들러 등록
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), NoticePage.class);
+                    intent.putExtra("courseName", courseName);
+                    intent.putExtra("boardName", itemName);
+                    startActivity(intent);
+                }
+            });
+            return;
+        }
 
         // TextView를 생성해서 가져옴.
         /*TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.textview_layout, null);

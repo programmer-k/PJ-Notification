@@ -18,7 +18,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="18dp"
             android:contentDescription="@string/logo"
-            android:onClick="onClickNoticeButton"
             app:srcCompat="@drawable/pj_logo_white" />
 
         <TextView
