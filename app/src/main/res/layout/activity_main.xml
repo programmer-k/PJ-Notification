@@ -18,14 +18,13 @@
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:background="@android:color/background_light"
             android:contentDescription="@string/logo"
             android:scaleType="fitXY"
-            android:src="@drawable/logo"
-            app:srcCompat="@drawable/logo" />
+            android:src="@drawable/login_title"
+            app:srcCompat="@drawable/login_title" />
     </RelativeLayout>
 
     <RelativeLayout

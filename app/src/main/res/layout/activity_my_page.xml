@@ -24,8 +24,9 @@
                 android:layout_height="83dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginVertical="10dp"
                 android:onClick="inflateSettingsActivity"
-                app:srcCompat="@drawable/logo" />
+                app:srcCompat="@drawable/pj_logo_blue_big" />
 
             <ImageButton
                 android:id="@+id/imageButton"
@@ -36,7 +37,7 @@
                 android:background="@drawable/pj_logo_white"
                 android:onClick="updateCourseData"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/pj_logo_blue" />
+                app:srcCompat="@drawable/pj_logo_white" />
         </LinearLayout>
 
     </LinearLayout>
