@@ -59,9 +59,6 @@ public class MyPage extends AppCompatActivity {
         appRater.setPhrases("평점 남기기","평점과 리뷰를 적어주시면 큰 도움이 될 것 같은데, 혹시 부탁드려도 될까요..?", "평점 남기기", "나중에 하기", "No, thanks");
 
         appRater.show();
-
-        // 광고 초기화 및 호출
-        // Advertisement.initializeAd(this, findViewById(R.id.adView));
     }
 
     // PJ 버튼 클릭 처리

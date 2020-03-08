@@ -58,9 +58,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("databaseVersion", 2);
             editor.apply();
         }
-
-        // 광고 초기화 및 호출
-        // Advertisement.initializeAd(this, findViewById(R.id.adView));
     }
 
     private boolean loginWithPreviousInfo(String id, String pw) {
