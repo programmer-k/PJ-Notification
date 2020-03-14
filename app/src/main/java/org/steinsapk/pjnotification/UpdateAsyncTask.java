@@ -87,7 +87,7 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
             return null;
         }
 
-        writeLog(context, "Crwaling Success!");
+        writeLog(context, "Crawling Success!");
         return null;
     }
 
@@ -109,7 +109,8 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
         crawling.closeDB();
 
         // Inform that the job is finished.
-        jobService.jobFinished(jobParameters, false);
+        if (jobService != null)
+            jobService.jobFinished(jobParameters, false);
     }
 
     private static void debugLog(String log) {
