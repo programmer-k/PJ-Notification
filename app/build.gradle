@@ -10,8 +10,8 @@ android {
         applicationId "org.steinsapk.pjnotification"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 18
-        versionName "2.1"
+        versionCode 19
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
