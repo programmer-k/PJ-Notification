@@ -8,8 +8,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Date;
 
 public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
     private JobService jobService;
@@ -56,7 +58,7 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... values) {
-        /*
+
         FileOutputStream outputStream;
         try {
             outputStream = context.openFileOutput("log_file_crawling.txt", Context.MODE_APPEND);
@@ -69,7 +71,7 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
         } catch (Exception ex) {
             debugLog("log file write fail: " + ex.getMessage());
         }
-        */
+
 
         try {
             // 로그인
@@ -94,39 +96,11 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
             String sStackTrace = sw.toString(); // stack trace as a string
             debugLog(sStackTrace);
 
-            /*
-            try {
-                outputStream = context.openFileOutput("log_file_crawling.txt", Context.MODE_APPEND);
-                Date date = new Date();
-                outputStream.write(date.toString().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(sStackTrace.getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.flush();
-                outputStream.close();
-            } catch (Exception ex) {
-                debugLog("log file write fail: " + ex.getMessage());
-            }
-             */
-
+            writeLog(context, sStackTrace);
             return null;
         }
 
-        /*
-        try {
-            outputStream = context.openFileOutput("log_file_crawling.txt", Context.MODE_APPEND);
-            Date date = new Date();
-            outputStream.write(date.toString().getBytes());
-            outputStream.write("\n".getBytes());
-            outputStream.write("Crawling Success".getBytes());
-            outputStream.write("\n".getBytes());
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception ex) {
-            debugLog("log file write fail: " + ex.getMessage());
-        }
-         */
-
+        writeLog(context, "Crwaling Success!");
         return null;
     }
 
@@ -153,5 +127,20 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private static void debugLog(String log) {
         Log.e("UpdateAsyncTask", log);
+    }
+
+    private static void writeLog(Context context, String str) {
+        FileOutputStream outputStream;
+        Date date = new Date();
+
+        try {
+            outputStream = context.openFileOutput("log_file_crawling.txt", Context.MODE_APPEND);
+            outputStream.write((date.toString() + "\n").getBytes());
+            outputStream.write((str + "\n\n").getBytes());
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception ex) {
+            debugLog("log file write fail: " + ex.getMessage());
+        }
     }
 }
