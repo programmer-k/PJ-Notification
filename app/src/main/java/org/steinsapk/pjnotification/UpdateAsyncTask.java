@@ -1,12 +1,19 @@
 package org.steinsapk.pjnotification;
 
 import android.app.ProgressDialog;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
+    private JobService jobService;
+    private JobParameters jobParameters;
     private Crawling crawling;
     private ProgressDialog progressDialog;
     private String error = "";
@@ -31,6 +38,12 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
         password = userInfo.getSavedInfo("PW");
     }
 
+    public UpdateAsyncTask(Context context, boolean setDialog, JobService jobService, JobParameters jobParameters) {
+        this(context, setDialog);
+        this.jobService = jobService;
+        this.jobParameters = jobParameters;
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -43,6 +56,21 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... values) {
+        /*
+        FileOutputStream outputStream;
+        try {
+            outputStream = context.openFileOutput("log_file_crawling.txt", Context.MODE_APPEND);
+            Date date = new Date();
+            outputStream.write(date.toString().getBytes());
+            outputStream.write("\n".getBytes());
+            outputStream.write("Crawling Start!\n".getBytes());
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception ex) {
+            debugLog("log file write fail: " + ex.getMessage());
+        }
+        */
+
         try {
             // 로그인
             crawling.login(id, password);
@@ -60,27 +88,44 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
             error = e.getMessage();
             debugLog(error);
 
-            /*
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             String sStackTrace = sw.toString(); // stack trace as a string
             debugLog(sStackTrace);
 
-            FileOutputStream outputStream;
-
+            /*
             try {
-                outputStream = context.openFileOutput("log_file.txt", Context.MODE_APPEND);
+                outputStream = context.openFileOutput("log_file_crawling.txt", Context.MODE_APPEND);
                 Date date = new Date();
                 outputStream.write(date.toString().getBytes());
+                outputStream.write("\n".getBytes());
                 outputStream.write(sStackTrace.getBytes());
+                outputStream.write("\n".getBytes());
                 outputStream.flush();
                 outputStream.close();
             } catch (Exception ex) {
                 debugLog("log file write fail: " + ex.getMessage());
             }
-            */
+             */
+
+            return null;
         }
+
+        /*
+        try {
+            outputStream = context.openFileOutput("log_file_crawling.txt", Context.MODE_APPEND);
+            Date date = new Date();
+            outputStream.write(date.toString().getBytes());
+            outputStream.write("\n".getBytes());
+            outputStream.write("Crawling Success".getBytes());
+            outputStream.write("\n".getBytes());
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception ex) {
+            debugLog("log file write fail: " + ex.getMessage());
+        }
+         */
 
         return null;
     }
@@ -101,6 +146,9 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
 
         // DB 닫기
         crawling.closeDB();
+
+        // Inform that the job is finished.
+        jobService.jobFinished(jobParameters, false);
     }
 
     private static void debugLog(String log) {

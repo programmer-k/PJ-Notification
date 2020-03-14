@@ -49,11 +49,8 @@ public class MyService extends JobService {
     UpdateAsyncTask updateAsyncTask;
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
-        updateAsyncTask = new UpdateAsyncTask(getApplicationContext(), false);
+        updateAsyncTask = new UpdateAsyncTask(getApplicationContext(), false, this, jobParameters);
         updateAsyncTask.execute();
-
-        //!TODO: JobFinished 메서드 호출하기
-
 
         // 네트워크 작업이어서 시간이 걸리므로 true 반환하기.
         return true;
