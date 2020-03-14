@@ -79,7 +79,7 @@ public class MyService extends JobService {
 
         int network = preferences.getBoolean("LTE", false) ? JobInfo.NETWORK_TYPE_ANY : JobInfo.NETWORK_TYPE_UNMETERED;
         // 설정 페이지를 들어가지 않았으면 값을 불러올 수 없다.
-        int period = Integer.parseInt(preferences.getString("updatePeriod", "60"));
+        int period = Integer.parseInt(preferences.getString("updatePeriod", "15"));
 
         Log.e("TAG", Integer.toString(network));
         Log.e("TAG", Integer.toString(period));
