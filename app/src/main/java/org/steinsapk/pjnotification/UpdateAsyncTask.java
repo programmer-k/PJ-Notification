@@ -58,20 +58,7 @@ public class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... values) {
-
-        FileOutputStream outputStream;
-        try {
-            outputStream = context.openFileOutput("log_file_crawling.txt", Context.MODE_APPEND);
-            Date date = new Date();
-            outputStream.write(date.toString().getBytes());
-            outputStream.write("\n".getBytes());
-            outputStream.write("Crawling Start!\n".getBytes());
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception ex) {
-            debugLog("log file write fail: " + ex.getMessage());
-        }
-
+        writeLog(context, "Crawling Start!");
 
         try {
             // 로그인
