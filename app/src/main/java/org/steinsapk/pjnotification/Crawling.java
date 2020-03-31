@@ -1,8 +1,10 @@
 package org.steinsapk.pjnotification;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
@@ -79,7 +81,7 @@ public class Crawling {
         Document document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/").cookies(cookies).get();
 
         // 디버깅용 코드 - 학기 바꾸기
-        //document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/?year=2018&term=2").cookies(cookies).get();
+        //document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/?year=2018&term=1").cookies(cookies).get();
 
         // 수강 변경, 철회 등을 대비해 기존 데이터 지우기
         db.clearCourse();
@@ -272,8 +274,17 @@ public class Crawling {
             if (!insertNotice(courseName, noticeTitle, noticeContents, noticeDate, noticeLink, attachmentFiles, boardName))
                 break;
 
-            // 알림 생성하기
-            Notification.makeNotification(courseName, noticeTitle, context, true, "", boardName);
+            // 현재 루프를 도는 board가 Disabled Board List에 있는지 확인하기
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            String[] notificationDisabledList = preferences.getString("notificationDisabledList", "").split(",");
+            boolean createNotification = true;
+            for (int i = 0; i < notificationDisabledList.length; i++)
+                if (boardName.contains(notificationDisabledList[i]))
+                    createNotification = false;
+
+            // Disabled Board List에 없을 때만 알림 생성하기
+            if (createNotification)
+                Notification.makeNotification(courseName, noticeTitle, context, true, "", boardName);
 
             // 탈출 조건
             Element htmlElement = noticePage.selectFirst("div.table-footer-area + table");
