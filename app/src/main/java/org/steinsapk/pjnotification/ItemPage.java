@@ -22,7 +22,8 @@ public class ItemPage extends AppCompatActivity {
         SQLiteDatabase db = Database.openDatabase(getApplicationContext());
 
         // 쿼리하기
-        Cursor cursor = db.rawQuery("SELECT ITEMCONTENTS FROM ITEM WHERE COURSENAME='"+ courseName + "' AND ITEMNAME='" + itemName + "';", null);
+        String query = ("SELECT ITEMCONTENTS FROM ITEM WHERE COURSENAME='"+ courseName + "' AND ITEMNAME='" + itemName + "';").replaceAll("'", "''");
+        Cursor cursor = db.rawQuery(query, null);
 
         cursor.moveToNext();
         String data = cursor.getString(0);
