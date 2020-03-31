@@ -3,6 +3,7 @@ package org.steinsapk.pjnotification;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -135,6 +136,16 @@ public class CoursePage extends AppCompatActivity {
                 intent.putExtra("courseName", courseName);
                 intent.putExtra("itemName", itemName);
                 startActivity(intent);
+            }
+        });
+
+        // 버튼을 길게 누르면 웹 브라우저 띄우기
+        button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemLink));
+                startActivity(browserIntent);
+                return true;
             }
         });
     }

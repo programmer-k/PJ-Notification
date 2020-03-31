@@ -3,6 +3,7 @@ package org.steinsapk.pjnotification;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -81,7 +82,7 @@ public class NoticePage extends AppCompatActivity {
         db = Database.openDatabase(getApplicationContext());
 
         // 쿼리하기
-        Cursor cursor = db.rawQuery("SELECT NOTICETITLE, NOTICECONTENTS, ATTACHMENTFILES FROM NOTICE WHERE COURSENAME='" + courseName + "' AND BOARDNAME='" + boardName + "' ORDER BY TIME DESC" + ";", null);
+        Cursor cursor = db.rawQuery("SELECT NOTICETITLE, NOTICECONTENTS, ATTACHMENTFILES, NOTICELINK FROM NOTICE WHERE COURSENAME='" + courseName + "' AND BOARDNAME='" + boardName + "' ORDER BY TIME DESC" + ";", null);
 
         // 제목 텍스트 설정하기
         TextView textView1 = findViewById(R.id.courseName);
@@ -94,15 +95,16 @@ public class NoticePage extends AppCompatActivity {
             String noticeTitle = cursor.getString(0);
             String noticeContents = cursor.getString(1);
             String attachmentFiles = cursor.getString(2);
+            String noticeLink = cursor.getString(3);
 
             // 레이아웃 그리기
-            drawLayout(noticeTitle, noticeContents, attachmentFiles);
+            drawLayout(noticeTitle, noticeContents, attachmentFiles, noticeLink);
         }
 
         cursor.close();
     }
 
-    private void drawLayout(String noticeTitle, String noticeContents, String attchmentFiles) {
+    private void drawLayout(String noticeTitle, String noticeContents, String attchmentFiles, String noticeLink) {
         // 버튼 레이아웃을 생성해서 가져옴.
         ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.button_layout, null);
         linearLayout.addView(viewGroup);
@@ -145,6 +147,16 @@ public class NoticePage extends AppCompatActivity {
                 } else {
                     v.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        // 버튼을 길게 누르면 웹 브라우저 띄우기
+        button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(noticeLink));
+                startActivity(browserIntent);
+                return true;
             }
         });
     }
