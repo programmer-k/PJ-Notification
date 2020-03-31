@@ -14,8 +14,12 @@
         app:summary="와이섹 서버 접속을 몇 분마다 할지 설정합니다."/>
 
     <EditTextPreference
-        android:key="notificationDisabledList"
+        android:key="notificationDisabledCourseList"
+        android:title="Disabled Course List"
+        app:summary="알림을 받지 않을 강의를 설정합니다. 여러 개를 설정할 경우 띄어쓰기 없이 ,로 구분해주세요. (ex: 공학수학(1),공학수학(2))"/>
+
+    <EditTextPreference
+        android:key="notificationDisabledBoardList"
         android:title="Disabled Board List"
-        app:summary="알림을 받지 않을 게시판을 설정합니다. 여러 개를 설정할 경우
-        띄어쓰기 없이 ,로 구분해주세요. (ex: 질문과 답변,Q&amp;A)"/>
+        app:summary="알림을 받지 않을 게시판을 설정합니다. 여러 개를 설정할 경우 띄어쓰기 없이 ,로 구분해주세요. (ex: 질문과 답변,Q&amp;A)"/>
 </PreferenceScreen>

@@ -185,7 +185,7 @@ public class Crawling {
                 }
 
                 // DB에 넣기
-                if (db.insertItem(courseName, itemName, itemContents, itemLink, itemAttribute))
+                if (db.insertItem(courseName, itemName, itemContents, itemLink, itemAttribute) && checkDisabledList(courseName, itemName))
                     // 알림 생성하기
                     Notification.makeNotification(courseName, itemName, context, false, itemName, "");
             }
@@ -274,16 +274,9 @@ public class Crawling {
             if (!insertNotice(courseName, noticeTitle, noticeContents, noticeDate, noticeLink, attachmentFiles, boardName))
                 break;
 
-            // 현재 루프를 도는 board가 Disabled Board List에 있는지 확인하기
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-            String[] notificationDisabledList = preferences.getString("notificationDisabledList", "").split(",");
-            boolean createNotification = true;
-            for (int i = 0; i < notificationDisabledList.length; i++)
-                if (boardName.contains(notificationDisabledList[i]))
-                    createNotification = false;
 
             // Disabled Board List에 없을 때만 알림 생성하기
-            if (createNotification)
+            if (checkDisabledList(courseName, boardName))
                 Notification.makeNotification(courseName, noticeTitle, context, true, "", boardName);
 
             // 탈출 조건
@@ -331,5 +324,21 @@ public class Crawling {
         webClient.getOptions().setPopupBlockerEnabled(true);
 
         return webClient;
+    }
+
+    private boolean checkDisabledList(String courseName, String boardName) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String[] notificationDisabledBoardList = preferences.getString("notificationDisabledBoardList", "").split(",");
+        boolean createNotification = true;
+        for (int i = 0; i < notificationDisabledBoardList.length; i++)
+            if (boardName.contains(notificationDisabledBoardList[i]))
+                createNotification = false;
+
+        // 현재 루프는 도는 Course가 Disabled Course List에 있는지 확인하기
+        String notificationDisabledCourseList = preferences.getString("notificationDisabledCourseList", "");
+        if (notificationDisabledCourseList.contains(courseName))
+            createNotification = false;
+
+        return createNotification;
     }
 }
