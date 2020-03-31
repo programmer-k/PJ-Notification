@@ -64,4 +64,6 @@ public class UserInfo {
     public String getSavedInfo(String str) {
         return sharedPreferences.getString(str, "");
     }
+
+    public boolean getLoginRecord() { return sharedPreferences.getBoolean("LOGIN_RECORD", false); }
 }

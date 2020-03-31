@@ -18,9 +18,15 @@ public class SplashActivity extends AppCompatActivity {
         String itemName = getIntent().getStringExtra("itemName");
         String boardName = getIntent().getStringExtra("boardName");
 
-        // courseName 값이 없으면 일반적인 앱 실행이므로 MainActivity를 띄운다.
+        // courseName 값이 없으면 일반적인 앱 실행
         if (courseName == null) {
-            intent = new Intent(this, MainActivity.class);
+            // 로그인 기록이 없으면 로그인 창, 있으면 마이 페이지 띄우기
+            UserInfo userInfo = new UserInfo(this);
+            if (userInfo.getLoginRecord())
+                intent = new Intent(this, MyPage.class);
+            else
+                intent = new Intent(this, MainActivity.class);
+
         } else {
             if (isNotice)
                 intent = new Intent(this, NoticePage.class);
