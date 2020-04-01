@@ -22,4 +22,12 @@
         android:key="notificationDisabledBoardList"
         android:title="Disabled Board List"
         app:summary="알림을 받지 않을 게시판을 설정합니다. 여러 개를 설정할 경우 띄어쓰기 없이 ,로 구분해주세요. (ex: 질문과 답변,Q&amp;A)"/>
+
+    <Preference
+        android:key="notificationActivityLog"
+        android:title="Notification Activity Log"
+        android:summary="알림 활동에 대한 로그">
+        <intent android:targetPackage="org.steinsapk.pjnotification"
+                android:targetClass="org.steinsapk.pjnotification.LogActivity"/>
+    </Preference>
 </PreferenceScreen>
