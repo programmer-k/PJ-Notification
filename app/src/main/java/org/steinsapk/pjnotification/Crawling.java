@@ -330,9 +330,12 @@ public class Crawling {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String[] notificationDisabledBoardList = preferences.getString("notificationDisabledBoardList", "").split(",");
         boolean createNotification = true;
-        for (int i = 0; i < notificationDisabledBoardList.length; i++)
-            if (boardName.contains(notificationDisabledBoardList[i]))
-                createNotification = false;
+        if (!(notificationDisabledBoardList.length == 1 && notificationDisabledBoardList[0].equals(""))) {
+            for (String s : notificationDisabledBoardList) {
+                    if (boardName.contains(s))
+                        createNotification = false;
+            }
+        }
 
         // 현재 루프는 도는 Course가 Disabled Course List에 있는지 확인하기
         String notificationDisabledCourseList = preferences.getString("notificationDisabledCourseList", "");
