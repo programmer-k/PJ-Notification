@@ -33,7 +33,7 @@ public class ItemPage extends AppCompatActivity {
         WebView webView = findViewById(R.id.webView);
 
         if (data.equals("")) {
-            webView.loadData("<center><h2>파일입니다.</h2><p>YSCEC에서 확인해주세요.</p></center>", "text/html", "UTF-8");
+            webView.loadData("<center><h2>파일입니다.</h2><p>뒤로 돌아가셔서 제목을 길게 누르시면 웹 브라우저로 파일을 다운로드 받으실 수 있습니다.</p></center>", "text/html", "UTF-8");
         } else
             webView.loadData(data, "text/html", "UTF-8");
     }
