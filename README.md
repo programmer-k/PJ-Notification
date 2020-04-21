@@ -19,7 +19,7 @@ At that time, I had enough time to do that, so I just started while worrying abo
 Even though there was some obstacles, I finally created one and published it in 27th, May, 2019.
 
 # Google Play Store
-You can check the **PJ Notification** [here](https://play.google.com/store/apps/details?id=org.steinspak.pjnotification).
+You can check the **PJ Notification** [here](https://play.google.com/store/apps/details?id=org.steinsapk.pjnotification).
 
 # Future Work
 Further work would be
