@@ -81,7 +81,7 @@ public class Crawling {
         Document document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/").cookies(cookies).get();
 
         // 디버깅용 코드 - 학기 바꾸기
-        //document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/?year=2018&term=1").cookies(cookies).get();
+        //document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/?year=2017&term=1").cookies(cookies).get();
 
         // 수강 변경, 철회 등을 대비해 기존 데이터 지우기
         db.clearCourse();
@@ -153,41 +153,45 @@ public class Crawling {
             Document coursePage = Jsoup.connect(courseLink).cookies(cookies).get();
 
             // Anchor 요소를 찾는다.
-            Elements anchors = coursePage.select("ul.section.img-text a");
+            try {
+                Elements anchors = coursePage.select("ul.section.img-text a");
 
-            for (Element anchor : anchors.subList(1, anchors.size())) {
-                String itemLink = anchor.attr("href");
+                for (Element anchor : anchors.subList(1, anchors.size())) {
+                    String itemLink = anchor.attr("href");
 
-                Element accessHide = anchor.selectFirst(".accesshide");
-                if (accessHide == null) {
-                    // accesshide가 없는 참고문헌은 무시하기.
-                    continue;
+                    Element accessHide = anchor.selectFirst(".accesshide");
+                    if (accessHide == null) {
+                        // accesshide가 없는 참고문헌은 무시하기.
+                        continue;
+                    }
+                    String itemAttribute = accessHide.text();
+
+                    //String itemName = anchor.querySelector(".instancename").asText();
+                    String itemName = anchor.selectFirst(".instancename").text();
+                    itemName = itemName.substring(0, itemName.indexOf(itemAttribute));
+                    String itemContents = "";
+
+                    debugLog(itemName);
+                    //debugLog(itemLink);
+                    //debugLog(itemAttribute);
+
+                    // 게시판은 패스
+                    if (itemAttribute.equals("게시판(일반)") || itemAttribute.equals("Forum(General)"))
+                        continue;
+
+                    // itemAttribute가 파일이라면 접속하지 말기.
+                    if (!(itemAttribute.equals("파일") || itemAttribute.equals("File"))) {
+                        Document page = Jsoup.connect(itemLink).cookies(cookies).get();
+                        itemContents = page.toString();
+                    }
+
+                    // DB에 넣기
+                    if (db.insertItem(courseName, itemName, itemContents, itemLink, itemAttribute) && checkDisabledList(courseName, itemName))
+                        // 알림 생성하기
+                        Notification.makeNotification(courseName, itemName, context, false, itemName, "");
                 }
-                String itemAttribute = accessHide.text();
-
-                //String itemName = anchor.querySelector(".instancename").asText();
-                String itemName = anchor.selectFirst(".instancename").text();
-                itemName = itemName.substring(0, itemName.indexOf(itemAttribute));
-                String itemContents = "";
-
-                debugLog(itemName);
-                //debugLog(itemLink);
-                //debugLog(itemAttribute);
-
-                // 게시판은 패스
-                if (itemAttribute.equals("게시판(일반)") || itemAttribute.equals("Forum(General)"))
-                    continue;
-
-                // itemAttribute가 파일이라면 접속하지 말기.
-                if (!(itemAttribute.equals("파일") || itemAttribute.equals("File"))) {
-                    Document page = Jsoup.connect(itemLink).cookies(cookies).get();
-                    itemContents = page.toString();
-                }
-
-                // DB에 넣기
-                if (db.insertItem(courseName, itemName, itemContents, itemLink, itemAttribute) && checkDisabledList(courseName, itemName))
-                    // 알림 생성하기
-                    Notification.makeNotification(courseName, itemName, context, false, itemName, "");
+            } catch (IllegalArgumentException e) {
+                // Bug Report Fixed: Anchor 요소가 하나도 없는 경우
             }
         }
 
