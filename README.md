@@ -173,14 +173,17 @@ I will try to fix errors and bugs as much as possible, but there always will be 
 
 ## Why to This Design?
 
-### Crawling [YSCEC](https://yscec.yonsei.ac.kr/index.php) Design
+### Crawling [YSCEC](https://yscec.yonsei.ac.kr/index.php) Design Pros
 At first, I thought running a server for crawling is a good way to implement **PJ Notification**.
 
 This is because
-#### 1. I did not know about Android deeply, so making a program running on server will reduce the work on the application and make the application simple.
+#### 1. I did not know about Android deeply.
+Making a program running on server will reduce the work on the application and make the application simple.
 #### 2. Running on a background would be limited by the Android system.
 
 However, **this design was abandoned** because one of my friends who helped me a lot for developing this application said
+
+### Crawling [YSCEC](https://yscec.yonsei.ac.kr/index.php) Design Cons
 
 #### 1. Running a server to crawl would need a security and encryption.
 I had little knowledge about the security and encryption. Although I can learn and find some good stuffs on the Internet, I cannot guarantee to provide a completely safe security.
