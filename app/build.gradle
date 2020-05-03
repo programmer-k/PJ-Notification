@@ -57,6 +57,4 @@ dependencies {
     implementation files('libs/AppRater.jar')
     // jsoup HTML parser library @ https://jsoup.org/
     implementation 'org.jsoup:jsoup:1.13.1'
-    // Markdown Viewer
-    implementation 'us.feras.mdv:markdownview:1.1.0'
 }

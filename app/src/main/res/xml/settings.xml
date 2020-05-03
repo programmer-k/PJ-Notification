@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="explanation"
+        android:title="About PJ Notification"
+        android:summary="PJ Notification에 대한 설명">
+        <intent android:targetPackage="org.steinsapk.pjnotification"
+            android:targetClass="org.steinsapk.pjnotification.HtmlViewActivity"/>
+    </Preference>
 
     <SwitchPreferenceCompat
         app:key="LTE"
