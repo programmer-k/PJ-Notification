@@ -5,6 +5,22 @@
 Please note that **PJ Notification** is **unofficial** that is not granted anything from university.
 
 
+## Supporting PJ Notification
+
+Although there were much **help** from my friends and many **reviews** that motivated me, **PJ Notification** is developed only by myself for about a year, and I developed voluntarily without any financial support. However, I will really appreciate if you support **PJ Notification** by **any means**.
+
+This includes
+* **Donation**
+* **Icon Image**
+* **Test** the Application Before Releasing New Version
+* **Bug** Report
+* Leave a **Review** in Google Play Store
+* **Develop** an Application With Me
+* **Promote** **PJ Notification** to Your Friends
+
+Please leave a **message** or a **Kakao Talk message** to ```010-6536-2048``` or contact via **email** ```steinsapk@gmail.com``` if **you are interested**.
+
+**Again, I will really really appreciate any of them.**
 
 ## From Motivation to Creation
 
