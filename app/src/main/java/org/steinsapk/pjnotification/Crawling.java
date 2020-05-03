@@ -81,7 +81,7 @@ public class Crawling {
         Document document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/").cookies(cookies).get();
 
         // 디버깅용 코드 - 학기 바꾸기
-        document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/?year=2017&term=1").cookies(cookies).get();
+        //document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/?year=2017&term=1").cookies(cookies).get();
 
         // 수강 변경, 철회 등을 대비해 기존 데이터 지우기
         db.clearCourse();
