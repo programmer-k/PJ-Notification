@@ -177,20 +177,20 @@ I will try to fix errors and bugs as much as possible, but there always will be 
 At first, I thought running a server for crawling is a good way to implement **PJ Notification**.
 
 This is because
-1. #### I did not know about Android deeply, so making a program running on server will reduce the work on the application and make the application simple.
-2. #### Running on a background would be limited by the Android system.
+#### 1. I did not know about Android deeply, so making a program running on server will reduce the work on the application and make the application simple.
+#### 2. Running on a background would be limited by the Android system.
 
 However, **this design was abandoned** because one of my friends who helped me a lot for developing this application said
 
-1. #### Running a server to crawl would need a security and encryption.
+#### 1. Running a server to crawl would need a security and encryption.
 I had little knowledge about the security and encryption. Although I can learn and find some good stuffs on the Internet, I cannot guarantee to provide a completely safe security.
 
-2. #### Although most of the websites only store the hash value for the password, the server to crawl needs a full password.
+#### 2. Although most of the websites only store the hash value for the password, the server to crawl needs a full password.
 This is because while a normal website is checking whether the user is a valid user for its website, crawling server is accessing another web server to crawl. 
 
-3. #### The YSCEC server might block the crawling server.
-To support many users, the crawling server should login with many different IDs. However, there is alwayas a risk that the maintainer of the [YSCEC](https://yscec.yonsei.ac.kr/index.php) server might find out and block.<br><br>
-Although there are many shared computers on campus that students login with their own IDs and print the course materials, the crawling server would login much more frequently and continuously to support many users. Also, while the shared computers on campus have IP within Yonsei University, the crawling server would probably not have one.<br><br>
+#### 3. The YSCEC server might block the crawling server.
+To support many users, the crawling server should login with many different IDs. However, there is alwayas a risk that the maintainer of the [YSCEC](https://yscec.yonsei.ac.kr/index.php) server might find out and block.<br>
+Although there are many shared computers on campus that students login with their own IDs and print the course materials, the crawling server would login much more frequently and continuously to support many users. Also, while the shared computers on campus have IP within Yonsei University, the crawling server would probably not have one.<br>
 For me, I suspected it would rarely happen because I was doubting whether there was a maintainer of the server who cares about the access records. If the university paid much attention to [YSCEC](https://yscec.yonsei.ac.kr/index.php) server, why would they do not update the outdated webpage and develop an application that pushes alert?
 
 
