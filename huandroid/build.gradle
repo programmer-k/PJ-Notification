@@ -16,7 +16,7 @@ android {
         versionCode version.replaceAll('\\.','') as Integer
         versionName version
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         consumerProguardFiles 'proguard-rules.pro'
     }
@@ -57,10 +57,10 @@ dependencies {
     implementation "commons-net:commons-net:3.6"
     implementation "org.eclipse.jetty.websocket:websocket-client:9.4.9.v20180320"
 
-    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
 
 task sourcesJar(type: Jar) {
