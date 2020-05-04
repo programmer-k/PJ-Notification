@@ -172,6 +172,7 @@ public class Database {
             ret = true;
 
         cursor.close();
+        return ret;
     }
 
     public void closeDB() {
