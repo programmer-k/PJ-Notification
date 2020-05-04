@@ -15,8 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.NoticePage"
+            android:name=".activity.RecentNotificationPage"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.NoticePage"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.HtmlViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />

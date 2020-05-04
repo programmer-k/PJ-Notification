@@ -113,9 +113,19 @@ public class MyPage extends AppCompatActivity {
         // 강의 목록 불러오기
         Cursor cursor = database.getCourseList();
 
+        // 최근 알림
+        LinearLayout layout = findViewById(R.id.courseLayout1);
+        layout.setOnClickListener((View v) -> {
+            // 인텐트 객체 생성
+            Intent intent = new Intent(getApplicationContext(), RecentNotificationPage.class);
+
+            // 공지 목록 화면 띄우기
+            startActivity(intent);
+        });
+
         // 강의명 하나씩 추출하고 설정하기
         int i;
-        for (i = 1; cursor.moveToNext(); i++) {
+        for (i = 2; cursor.moveToNext(); i++) {
             // 강의명 가져오기
             String courseName = cursor.getString(0);
 
