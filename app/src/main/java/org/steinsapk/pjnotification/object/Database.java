@@ -139,6 +139,26 @@ public class Database {
         return success;
     }
 
+    public boolean isNoticeTitleExist(String courseName, String noticeTitle, String boardName) {
+        boolean ret;
+
+        courseName = courseName.replaceAll("'", "''");
+        noticeTitle = noticeTitle.replaceAll("'", "''");
+        boardName = boardName.replaceAll("'", "''");
+
+        Cursor cursor = db.rawQuery("SELECT NOTICETITLE FROM NOTICE WHERE COURSENAME=? AND BOARDNAME=? AND NOTICETITLE=?", new String[] { courseName, boardName, noticeTitle });
+
+        if (cursor.getCount() > 0)
+            ret = true;
+        else
+            ret = false;
+
+        cursor.close();
+        return ret;
+    }
+
+
+
     public void closeDB() {
         db.close();
     }
