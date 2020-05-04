@@ -1,6 +1,7 @@
 package org.steinsapk.pjnotification.activity;
 
 import android.os.Bundle;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,8 @@ public class HtmlViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_html_view);
 
         WebView webView = findViewById(R.id.webView);
-        webView.clearCache(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         webView.loadUrl("http://kvpn.asuscomm.com:8000/PJNotification/README.html");
     }
 }

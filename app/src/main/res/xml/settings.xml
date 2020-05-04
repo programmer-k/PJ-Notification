@@ -6,7 +6,15 @@
         android:title="About PJ Notification"
         android:summary="PJ Notification에 대한 설명">
         <intent android:targetPackage="org.steinsapk.pjnotification"
-            android:targetClass="org.steinsapk.pjnotification.activity.HtmlViewActivity"/>
+                android:targetClass="org.steinsapk.pjnotification.activity.HtmlViewActivity"/>
+    </Preference>
+
+    <Preference
+        android:key="campusNavi"
+        android:title="Campus Navi"
+        android:summary="최적의 이동 경로를 찾아주는 교내 네비게이션">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="https://csne.github.io/CampusNavi/"/>
     </Preference>
 
     <SwitchPreferenceCompat
