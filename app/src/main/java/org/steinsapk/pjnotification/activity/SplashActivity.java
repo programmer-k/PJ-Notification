@@ -20,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         boolean isNotice = getIntent().getBooleanExtra("isNotice", false);
         String itemName = getIntent().getStringExtra("itemName");
         String boardName = getIntent().getStringExtra("boardName");
+        String noticeTitle = getIntent().getStringExtra("noticeTitle");
 
         // courseName 값이 없으면 일반적인 앱 실행
         if (courseName == null) {
@@ -32,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
 
         } else {
             if (isNotice)
-                intent = new Intent(this, BoardPage.class);
+                intent = new Intent(this, NoticePage.class);
             else
                 intent = new Intent(this, ItemPage.class);
 
@@ -40,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
             intent.putExtra("courseName", courseName);
             intent.putExtra("itemName", itemName);
             intent.putExtra("boardName", boardName);
+            intent.putExtra("noticeTitle", noticeTitle);
         }
 
         startActivity(intent);

@@ -37,6 +37,7 @@ public class Notification {
         intent.putExtra("isNotice", isNotice);
         intent.putExtra("itemName", itemName);
         intent.putExtra("boardName", boardName);
+        intent.putExtra("noticeTitle", noticeTitle);
         Log.e("TAG", courseName);
 
 

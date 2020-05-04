@@ -86,7 +86,7 @@ public class BoardPage extends AppCompatActivity {
         db = Database.openDatabase(getApplicationContext());
 
         // 쿼리하기
-        Cursor cursor = db.rawQuery("SELECT NOTICETITLE, NOTICECONTENTS, ATTACHMENTFILES, NOTICELINK FROM NOTICE WHERE COURSENAME='" + courseName + "' AND BOARDNAME='" + boardName + "' ORDER BY TIME DESC" + ";", null);
+        Cursor cursor = db.rawQuery("SELECT DISTINCT NOTICETITLE, NOTICELINK FROM NOTICE WHERE COURSENAME='" + courseName + "' AND BOARDNAME='" + boardName + "' ORDER BY TIME DESC" + ";", null);
 
         // 제목 텍스트 설정하기
         TextView textView1 = findViewById(R.id.courseName);
@@ -97,18 +97,16 @@ public class BoardPage extends AppCompatActivity {
 
         while (cursor.moveToNext()) {
             String noticeTitle = cursor.getString(0);
-            String noticeContents = cursor.getString(1);
-            String attachmentFiles = cursor.getString(2);
-            String noticeLink = cursor.getString(3);
+            String noticeLink = cursor.getString(1);
 
             // 레이아웃 그리기
-            drawLayout(noticeTitle, noticeContents, attachmentFiles, noticeLink);
+            drawLayout(noticeTitle, noticeLink);
         }
 
         cursor.close();
     }
 
-    private void drawLayout(String noticeTitle, String noticeContents, String attchmentFiles, String noticeLink) {
+    private void drawLayout(String noticeTitle, String noticeLink) {
         // 버튼 레이아웃을 생성해서 가져옴.
         ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.button_layout, null);
         linearLayout.addView(viewGroup);
@@ -123,6 +121,7 @@ public class BoardPage extends AppCompatActivity {
         Button button = (Button) viewGroup.getChildAt(0);
         button.setText(noticeTitle);
 
+        /*
         // TextView를 생성해서 가져옴.
         TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.textview_layout, null);
         linearLayout.addView(textView);
@@ -140,17 +139,18 @@ public class BoardPage extends AppCompatActivity {
 
         // 공지 내용 숨기기
         textView.setVisibility(View.GONE);
+        */
 
         // 버튼에 클릭 이벤트 핸들러 등록
         button.setOnClickListener(new View.OnClickListener() {
-            View v = textView;
             @Override
             public void onClick(View view) {
-                if (v.getVisibility() == View.GONE) {
-                    v.setVisibility(View.VISIBLE);
-                } else {
-                    v.setVisibility(View.GONE);
-                }
+                Intent intent = new Intent(getApplicationContext(), NoticePage.class);
+
+                intent.putExtra("courseName", courseName);
+                intent.putExtra("boardName", boardName);
+                intent.putExtra("noticeTitle", noticeTitle);
+                startActivity(intent);
             }
         });
 
