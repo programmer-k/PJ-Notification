@@ -157,7 +157,22 @@ public class Database {
         return ret;
     }
 
+    public boolean isItemExist(String courseName, String itemName) {
+        boolean ret;
+        courseName = courseName.replaceAll("'", "''");
+        itemName = itemName.replaceAll("'", "''");
 
+        // Query
+        Cursor cursor = db.rawQuery("SELECT * FROM ITEM WHERE ITEMNAME='" + itemName + "' AND COURSENAME='" + courseName +"';", null);
+
+        // Query 한 데이터가 없다면, INSERT
+        if (cursor.getCount() == 0) {
+            ret = false;
+        } else
+            ret = true;
+
+        cursor.close();
+    }
 
     public void closeDB() {
         db.close();
