@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.steinsapk.pjnotification.R;
 import org.steinsapk.pjnotification.object.Database;
 
-public class NoticePage extends AppCompatActivity {
+public class BoardPage extends AppCompatActivity {
     String courseName;
     String boardName;
     SQLiteDatabase db;
@@ -27,7 +27,7 @@ public class NoticePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice_page);
+        setContentView(R.layout.activity_board_page);
 
         // adView = findViewById(R.id.adView);
 

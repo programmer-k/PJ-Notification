@@ -128,7 +128,7 @@ public class CoursePage extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), NoticePage.class);
+                    Intent intent = new Intent(getApplicationContext(), BoardPage.class);
                     intent.putExtra("courseName", courseName);
                     intent.putExtra("boardName", itemName);
                     startActivity(intent);

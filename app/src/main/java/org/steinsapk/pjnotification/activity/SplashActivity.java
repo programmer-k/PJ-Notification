@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
 
         } else {
             if (isNotice)
-                intent = new Intent(this, NoticePage.class);
+                intent = new Intent(this, BoardPage.class);
             else
                 intent = new Intent(this, ItemPage.class);
 

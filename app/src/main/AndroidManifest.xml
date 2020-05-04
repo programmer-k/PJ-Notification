@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.NoticePage"
+            android:name=".activity.BoardPage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.MyPage"
