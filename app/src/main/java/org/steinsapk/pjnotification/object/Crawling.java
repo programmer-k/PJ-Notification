@@ -81,7 +81,7 @@ public class Crawling {
         Document document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/").cookies(cookies).get();
 
         // 디버깅용 코드 - 학기 바꾸기
-        //document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/?year=2017&term=1").cookies(cookies).get();
+        //document = Jsoup.connect("https://yscec.yonsei.ac.kr/my/?year=2019&term=2").cookies(cookies).get();
 
         // 수강 변경, 철회 등을 대비해 기존 데이터 지우기
         db.clearCourse();
@@ -216,88 +216,70 @@ public class Crawling {
     }
 
     private void loopNotice(Document noticeListPage, String courseName, String boardName) throws Exception {
-        boolean first = true;
-        Document noticePage = null;
         Element anchor;
+        int accessCount = 3;
+
+        // 모든 공지 제목 얻기
+        Elements noticeTitles = noticeListPage.select("li:not([class]) h1.thread-post-title");
+
+        // 링크 얻기
+        anchor = noticeTitles.first();
+        if (anchor == null) {
+            debugLog("공지가 하나도 없습니다!");
+            return;
+        }
+
+        anchor = anchor.selectFirst("a[onclick]");
+        if (anchor == null) {
+            debugLog("비공개 글입니다!");
+            return;
+        }
 
         // 순회하면서 기록하기
-        while (true) {
-            if (first) {
-                // class="thread-post-title"인 h1 태그를 찾는다.
-                Elements noticeTitles = noticeListPage.select("li:not([class]) h1.thread-post-title");
-
-                // 링크 얻기
-                anchor = noticeTitles.first();
-                if (anchor == null) {
-                    debugLog("공지가 하나도 없습니다!");
-                    break;
-                }
-
-                anchor = anchor.selectFirst("a[onclick]");
-                if (anchor == null) {
-                    debugLog("비공개 글입니다!");
-                    break;
-                }
-
-                // 공지 페이지 들어가기
-                String contentId = anchor.attr("onclick").replaceAll("\\D+","");
-                String noticePageUrl = "https://yscec.yonsei.ac.kr/mod/jinotechboard/content.php?contentId=" + contentId + "&b=&boardform=1";
-                noticePage = Jsoup.connect(noticePageUrl).cookies(cookies).get();
-            } else {
-                // 그 다음 페이지 들어가기 - 마지막 tr을 선택
-                Element tr = noticePage.selectFirst("div.table-footer-area + table > thead > tr:last-child");
-
-                // 댓글 있는 게시글
-                if (tr == null)
-                    tr = noticePage.selectFirst("div.table-reply-area + table > thead > tr:last-child");
-
-                // <a> 선택 후 페이지 이동
-                anchor = tr.selectFirst("a");
-                String nextLink = anchor.attr("href");
-
-                if (nextLink.equals("#")) {
-                    // 비공개 글
-                    break;
-                }
-
-                noticePage = Jsoup.connect(nextLink).cookies(cookies).get();
+        for (Element noticeTitleElement : noticeTitles) {
+            String contentId;
+            try {
+                contentId = noticeTitleElement.selectFirst("a").attr("onclick").replaceAll("\\D+", "");
+            } catch (NullPointerException e) {
+                debugLog("비공개 글입니다.");
+                continue;
             }
-
-            // 공지 제목, 글, 날짜, 링크 주소, 첨부 파일 얻기
-            String noticeTitle = noticePage.selectFirst("span.detail-title").text();
-            String noticeContents = noticePage.selectFirst("div.detail-contents").wholeText();
-            String noticeDate = noticePage.selectFirst("span.detail-date").text();
-            String noticeLink = noticePage.baseUri();
-            String attachmentFiles = "";
-
-            Element attachment = noticePage.selectFirst("ul.detail-attachment");
-            if (attachment != null) {
-                attachmentFiles = attachment.text();
+            // accessCount만큼만 실제로 들어가기
+            if (accessCount-- > 0)
+                accessNotice(courseName, boardName, contentId);
+            else {
+                // 제목이 바뀌었으면 실제로 들어가기
+                String noticeTitle = noticeTitleElement.selectFirst("a").text();
+                //debugLog("noticeTitle: " + noticeTitle);
+                if (!db.isNoticeTitleExist(courseName, noticeTitle, boardName))
+                    accessNotice(courseName, boardName, contentId);
             }
-
-            if (!insertNotice(courseName, noticeTitle, noticeContents, noticeDate, noticeLink, attachmentFiles, boardName))
-                break;
-
-
-            // Disabled Board List에 없을 때만 알림 생성하기
-            if (checkDisabledList(courseName, boardName))
-                Notification.makeNotification(courseName, noticeTitle, context, true, "", boardName);
-
-            // 탈출 조건
-            Element htmlElement = noticePage.selectFirst("div.table-footer-area + table");
-
-            // 댓글 있는 게시글
-            if (htmlElement == null) {
-                htmlElement = noticePage.selectFirst("div.table-reply-area + table");
-            }
-
-            // 첫 글하고 마지막 글은 <tr> 태그가 3개이다.
-            // 첫 글이자 마지막 글(글이 하나 일 때)은 <tr> 태그가 2개이다.
-            if ((!first && htmlElement.getElementsByTag("tr").size() == 3) || (first && htmlElement.getElementsByTag("tr").size() == 2))
-                break;
-
-            first = false;
         }
+    }
+
+    private void accessNotice(String courseName, String boardName, String contentId) throws Exception {
+        // 공지 페이지 들어가기
+        String noticePageUrl = "https://yscec.yonsei.ac.kr/mod/jinotechboard/content.php?contentId=" + contentId + "&b=&boardform=1";
+        Document noticePage = Jsoup.connect(noticePageUrl).cookies(cookies).get();
+
+        // 공지 제목, 글, 날짜, 링크 주소, 첨부 파일 얻기
+        String noticeTitle = noticePage.selectFirst("span.detail-title").text();
+        String noticeContents = noticePage.selectFirst("div.detail-contents").wholeText();
+        String noticeDate = noticePage.selectFirst("span.detail-date").text();
+        String noticeLink = noticePage.baseUri();
+        String attachmentFiles = "";
+
+        Element attachment = noticePage.selectFirst("ul.detail-attachment");
+        if (attachment != null) {
+            attachmentFiles = attachment.text();
+        }
+
+        if (!insertNotice(courseName, noticeTitle, noticeContents, noticeDate, noticeLink, attachmentFiles, boardName))
+            return;
+
+        // Disabled Board List에 없을 때만 알림 생성하기
+        if (checkDisabledList(courseName, boardName))
+            Notification.makeNotification(courseName, noticeTitle, context, true, "", boardName);
     }
 
     private boolean insertNotice(String courseName, String noticeTitle, String noticeContents, String noticeDate, String noticeLink, String attachmentFiles, String boardName) throws ParseException {
