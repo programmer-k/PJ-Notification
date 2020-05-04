@@ -179,6 +179,10 @@ public class Crawling {
                     if (itemAttribute.equals("게시판(일반)") || itemAttribute.equals("Forum(General)"))
                         continue;
 
+                    // 이미 아이템이 있다면, 패스
+                    if (db.isItemExist(courseName, itemName))
+                        continue;
+
                     // itemAttribute가 파일이라면 접속하지 말기.
                     if (!(itemAttribute.equals("파일") || itemAttribute.equals("File"))) {
                         Document page = Jsoup.connect(itemLink).cookies(cookies).get();
