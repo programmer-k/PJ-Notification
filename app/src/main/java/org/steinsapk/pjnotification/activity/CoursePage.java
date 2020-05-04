@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -80,6 +81,24 @@ public class CoursePage extends AppCompatActivity {
             // 레이아웃 그리기
             drawLayout(itemName, itemContents, itemLink);
         }
+
+        cursor.close();
+
+        // 이미지에 강의 링크 등록
+        String query = "SELECT COURSELINK FROM COURSE WHERE COURSENAME=?;";
+        cursor = db.rawQuery(query, new String[] { courseName });
+
+        cursor.moveToNext();
+        String courseLink = cursor.getString(0);
+
+        ImageView imageView = findViewById(R.id.imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(courseLink));
+                startActivity(browserIntent);
+            }
+        });
 
         cursor.close();
     }
