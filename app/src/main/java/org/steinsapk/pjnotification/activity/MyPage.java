@@ -1,4 +1,4 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,11 +10,16 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.steinsapk.pjnotification.R;
+import org.steinsapk.pjnotification.object.UpdateAsyncTask;
+import org.steinsapk.pjnotification.object.Database;
 
 import im.delight.apprater.AppRater;
 

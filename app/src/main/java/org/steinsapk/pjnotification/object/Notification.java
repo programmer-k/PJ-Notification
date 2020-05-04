@@ -1,12 +1,16 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.object;
 
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import android.util.Log;
+
+import org.steinsapk.pjnotification.R;
+import org.steinsapk.pjnotification.activity.SplashActivity;
 
 public class Notification {
     /*

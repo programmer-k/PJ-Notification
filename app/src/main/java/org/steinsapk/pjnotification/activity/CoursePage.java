@@ -1,11 +1,10 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.steinsapk.pjnotification.object.Database;
+import org.steinsapk.pjnotification.R;
 
 public class CoursePage extends AppCompatActivity {
     String courseName;

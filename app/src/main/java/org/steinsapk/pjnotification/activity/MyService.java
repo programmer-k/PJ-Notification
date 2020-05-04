@@ -1,4 +1,4 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,10 +15,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import android.text.format.DateUtils;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -32,6 +33,10 @@ import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
+
+import org.steinsapk.pjnotification.R;
+import org.steinsapk.pjnotification.object.UpdateAsyncTask;
+import org.steinsapk.pjnotification.object.Database;
 
 import java.io.IOException;
 import java.text.DateFormat;

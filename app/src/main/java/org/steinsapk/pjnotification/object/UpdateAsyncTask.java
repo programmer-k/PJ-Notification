@@ -1,4 +1,4 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.object;
 
 import android.app.ProgressDialog;
 import android.app.job.JobParameters;

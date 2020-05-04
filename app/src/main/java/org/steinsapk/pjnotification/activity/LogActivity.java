@@ -1,9 +1,11 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
+
+import org.steinsapk.pjnotification.R;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.object;
 
 import android.content.Context;
 import android.database.Cursor;

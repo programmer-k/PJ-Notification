@@ -6,7 +6,7 @@
         android:title="About PJ Notification"
         android:summary="PJ Notification에 대한 설명">
         <intent android:targetPackage="org.steinsapk.pjnotification"
-            android:targetClass="org.steinsapk.pjnotification.HtmlViewActivity"/>
+            android:targetClass="org.steinsapk.pjnotification.activity.HtmlViewActivity"/>
     </Preference>
 
     <SwitchPreferenceCompat
@@ -35,6 +35,6 @@
         android:title="Notification Activity Log"
         android:summary="알림 활동에 대한 로그">
         <intent android:targetPackage="org.steinsapk.pjnotification"
-                android:targetClass="org.steinsapk.pjnotification.LogActivity"/>
+                android:targetClass="org.steinsapk.pjnotification.activity.LogActivity"/>
     </Preference>
 </PreferenceScreen>

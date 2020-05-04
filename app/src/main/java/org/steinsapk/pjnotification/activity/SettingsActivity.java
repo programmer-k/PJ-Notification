@@ -1,7 +1,10 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.steinsapk.pjnotification.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

@@ -1,10 +1,12 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.object;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import org.steinsapk.pjnotification.R;
 
 public class UserInfo {
     private EditText idInput;

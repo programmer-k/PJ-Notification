@@ -1,4 +1,4 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -8,11 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.steinsapk.pjnotification.R;
+import org.steinsapk.pjnotification.object.Crawling;
+import org.steinsapk.pjnotification.object.Database;
+import org.steinsapk.pjnotification.object.UserInfo;
 
 public class MainActivity extends AppCompatActivity {
     EditText idInput;

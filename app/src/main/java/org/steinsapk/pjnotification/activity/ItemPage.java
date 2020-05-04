@@ -1,11 +1,15 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.webkit.WebView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.steinsapk.pjnotification.R;
+import org.steinsapk.pjnotification.object.Database;
 
 public class ItemPage extends AppCompatActivity {
 

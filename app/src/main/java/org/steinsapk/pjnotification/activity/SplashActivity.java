@@ -1,8 +1,11 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.steinsapk.pjnotification.object.UserInfo;
 
 public class SplashActivity extends AppCompatActivity {
 

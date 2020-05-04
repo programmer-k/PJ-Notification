@@ -1,7 +1,9 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.os.Bundle;
 import androidx.preference.PreferenceFragmentCompat;
+
+import org.steinsapk.pjnotification.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     @Override

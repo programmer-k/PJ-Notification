@@ -1,4 +1,4 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.object;
 
 /*
  * Copyright (c) delight.im <info@delight.im>

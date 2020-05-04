@@ -1,9 +1,11 @@
-package org.steinsapk.pjnotification;
+package org.steinsapk.pjnotification.activity;
 
 import android.os.Bundle;
 import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.steinsapk.pjnotification.R;
 
 public class HtmlViewActivity extends AppCompatActivity {
 
