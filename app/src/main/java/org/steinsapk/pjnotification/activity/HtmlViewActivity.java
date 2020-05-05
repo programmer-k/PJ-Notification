@@ -18,6 +18,6 @@ public class HtmlViewActivity extends AppCompatActivity {
         WebView webView = findViewById(R.id.webView);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.loadUrl("http://kvpn.asuscomm.com:8000/PJNotification/README.html");
+        webView.loadUrl(getIntent().getStringExtra("address"));
     }
 }
