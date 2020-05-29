@@ -75,7 +75,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="1주년 기념 이벤트"
+                    android:text="공지 알림 기록"
                     android:textColor="@android:color/black"
                     android:textSize="20dp" />
 

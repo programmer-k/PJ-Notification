@@ -113,19 +113,8 @@ public class MyPage extends AppCompatActivity {
         // 강의 목록 불러오기
         Cursor cursor = database.getCourseList();
 
-        // 1주년 기념 이벤트
-        LinearLayout layout = findViewById(R.id.courseLayout0);
-        layout.setOnClickListener((View v) -> {
-            // 인텐트 객체 생성
-            Intent intent = new Intent(getApplicationContext(), HtmlViewActivity.class);
-            intent.putExtra("address", "http://kvpn.asuscomm.com:8000/PJNotification/1st_anniversary_event.html");
-
-            // 공지 목록 화면 띄우기
-            startActivity(intent);
-        });
-
         // 최근 알림
-        LinearLayout layoutR = findViewById(R.id.courseLayout1);
+        LinearLayout layoutR = findViewById(R.id.courseLayout0);
         layoutR.setOnClickListener((View v) -> {
             // 인텐트 객체 생성
             Intent intent = new Intent(getApplicationContext(), RecentNotificationPage.class);
@@ -136,7 +125,7 @@ public class MyPage extends AppCompatActivity {
 
         // 강의명 하나씩 추출하고 설정하기
         int i;
-        for (i = 2; cursor.moveToNext(); i++) {
+        for (i = 1; cursor.moveToNext(); i++) {
             // 강의명 가져오기
             String courseName = cursor.getString(0);
 

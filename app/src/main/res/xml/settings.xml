@@ -2,16 +2,6 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
-        android:key="event"
-        android:title="1주년 기념 이벤트"
-        android:summary="2020년 5월 27일까지 진행합니다.">
-        <intent android:targetPackage="org.steinsapk.pjnotification"
-            android:targetClass="org.steinsapk.pjnotification.activity.HtmlViewActivity">
-            <extra android:name="address" android:value="http://kvpn.asuscomm.com:8000/PJNotification/1st_anniversary_event.html" />
-        </intent>
-    </Preference>
-
-    <Preference
         android:key="explanation"
         android:title="About PJ Notification"
         android:summary="PJ Notification에 대한 설명">
