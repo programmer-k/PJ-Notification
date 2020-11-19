@@ -127,12 +127,16 @@ public class Crawling {
 
 
                 // 게시판만 루프 돌기
-                if (itemAttribute.equals("게시판(일반)") || itemAttribute.equals("Forum(General)")) {
-                    String noticeListLink = spanElement.parent().attr("href");
-                    Document noticeListPage = Jsoup.connect(noticeListLink).cookies(cookies).get();
+                try {
+                    if (itemAttribute.equals("게시판(일반)") || itemAttribute.equals("Forum(General)")) {
+                        String noticeListLink = spanElement.parent().attr("href");
+                        Document noticeListPage = Jsoup.connect(noticeListLink).cookies(cookies).get();
 
-                    // 각 공지사항에 대해서 루프 돌면서 DB에 저장하기
-                    loopNotice(noticeListPage, courseName, boardName);
+                        // 각 공지사항에 대해서 루프 돌면서 DB에 저장하기
+                        loopNotice(noticeListPage, courseName, boardName);
+                    }
+                } catch (IllegalArgumentException e) {
+                    // Forum that cannot be accessed (due to time condition)
                 }
             }
         }
