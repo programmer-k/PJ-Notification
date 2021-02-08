@@ -24,6 +24,7 @@ Here are some of the screenshots.
 ## Tutorial and Demo Vdeio
 
 Here is the old (v1.0) tutorial and demo video.
+
 [![tutorial](http://img.youtube.com/vi/VedS4iDNDO0/0.jpg)](https://www.youtube.com/watch?v=VedS4iDNDO0)
 
 [![demo](http://img.youtube.com/vi/JV4_hJGm1JA/0.jpg)](https://www.youtube.com/watch?v=JV4_hJGm1JA)
