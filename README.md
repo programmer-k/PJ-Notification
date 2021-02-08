@@ -21,6 +21,13 @@ Here are some of the screenshots.
 <img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/settings_page.jpg" alt="settings_page" width="130"/>
 </p>
 
+## Tutorial and Demo Vdeio
+
+Here is the old (v1.0) tutorial and demo video.
+[![tutorial](http://img.youtube.com/vi/VedS4iDNDO0/0.jpg)](https://www.youtube.com/watch?v=VedS4iDNDO0)
+
+[![demo](http://img.youtube.com/vi/JV4_hJGm1JA/0.jpg)](https://www.youtube.com/watch?v=JV4_hJGm1JA)
+
 ## Contributing on PJ Notification
 
 Although there were much **help** from my friends and many **reviews** that motivated me, **PJ Notification** is developed only by myself for about a year, and I developed voluntarily without any financial support. However, I will really appreciate if you contribute **PJ Notification** by **any means**.
