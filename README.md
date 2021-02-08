@@ -21,7 +21,7 @@ Here are some of the screenshots.
 <img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/settings_page.jpg" alt="settings_page" width="130"/>
 </p>
 
-## Tutorial and Demo Vdeio
+## Tutorial and Demo Video
 
 Here is the old (v1.0) tutorial and demo video.
 
