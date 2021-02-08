@@ -13,12 +13,12 @@ From now, I will rarely update the repository because I think it is mature enoug
 Here are some of the screenshots.
 
 <p float="left">
-<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/login_page.jpg" alt="login_page" width="125"/>
-<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/main_page.jpg" alt="main_page" width="125"/>
-<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/course_page.jpg" alt="course_page" width="125"/>
-<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/notice_page.jpg" alt="notice_page" width="125"/>
-<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/notice_history_page.jpg" alt="notice_history_page" width="125"/>
-<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/settings_page.jpg" alt="settings_page" width="125"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/login_page.jpg" alt="login_page" width="130"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/main_page.jpg" alt="main_page" width="130"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/course_page.jpg" alt="course_page" width="130"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/notice_page.jpg" alt="notice_page" width="130"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/notice_history_page.jpg" alt="notice_history_page" width="130"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/settings_page.jpg" alt="settings_page" width="130"/>
 </p>
 
 ## Contributing on PJ Notification
