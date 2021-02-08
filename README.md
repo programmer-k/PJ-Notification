@@ -8,6 +8,17 @@ Please note that **PJ Notification** is **unofficial** that is not granted anyth
 
 From now, I will rarely update the repository because I think it is mature enough to use.
 
+## Screenshots
+
+Here are some of the screenshots.
+
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/login_page.jpg" alt="login_page" width="125"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/main_page.jpg" alt="main_page" width="125"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/course_page.jpg" alt="course_page" width="125"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/notice_page.jpg" alt="notice_page" width="125"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/notice_history_page.jpg" alt="notice_history_page" width="125"/>
+<img src="https://raw.githubusercontent.com/programmer-k/PJ-Notification/master/screenshots/settings_page.jpg" alt="settings_page" width="125"/>
+
 ## Contributing on PJ Notification
 
 Although there were much **help** from my friends and many **reviews** that motivated me, **PJ Notification** is developed only by myself for about a year, and I developed voluntarily without any financial support. However, I will really appreciate if you contribute **PJ Notification** by **any means**.
